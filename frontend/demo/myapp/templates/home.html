@@ -1,5 +1,8 @@
+{% load static %} <!-- if you are using static files -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +20,7 @@
             padding: 0;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 500px;
             margin: auto;
@@ -25,19 +29,24 @@
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
         }
+
         form {
             margin-top: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
         }
+
         input[type="file"] {
             margin-bottom: 10px;
         }
+
         button {
             display: block;
             width: 100%;
@@ -48,16 +57,18 @@
             border-radius: 3px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Upload Audio File</h1>
-        <form id="uploadForm" enctype="multipart/form-data">
-        
+        <form id="uploadForm" enctype="multipart/form-data" action="{% url 'upload_audio' %}" method="post">
+            {% csrf_token %}
             <label for="audioFile">Select Audio File:</label>
             <input type="file" id="audioFile" name="audioFile" accept="audio/*">
             <button type="submit" class="btn btn-primary">Upload</button>
@@ -68,27 +79,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Your custom JavaScript -->
-    <script>
-        $(document).ready(function () {
-            $('#uploadForm').submit(function (e) {
-                e.preventDefault();
-                var formData = new FormData(this);
-                $.ajax({
-                    url: '{% url "upload_audio" %}',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        alert('File uploaded successfully!');
-                    },
-                    error: function (xhr, status, error) {
-                        alert('An error occurred while uploading the file.');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
+
 </html>
